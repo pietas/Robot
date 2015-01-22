@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="AndroidHead.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AndroidLeftArm.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AndroidLeftLeg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AndroidRightArm.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AndroidRightLeg.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AndroidTorso.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="AssembleAndroid.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Texturing.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{2aee18d0-e213-40c2-9e62-556184fdbf77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{6dd3dfdc-c3e7-4588-a569-1a8780cb89f6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
