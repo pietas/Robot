@@ -2,56 +2,6 @@
 #include <windows.h>
 
 GLuint firstTexture;
-void
-menu(int val)
-{
-	if (val == 0)
-	{
-		glutDestroyWindow(window);
-		exit(0);
-	}
-	else
-	{
-		value = val;
-	}
-	glutPostRedisplay();
-}
-
-void
-createMenu()
-{
-	subMenuIDRotation = glutCreateMenu(menu);
-	glutAddMenuEntry("RotateX", subMenuID);
-	glutAddMenuEntry("RotateY", subMenuID);
-	glutAddMenuEntry("RotateZ", subMenuID);
-	subMenuID = glutCreateMenu(menu);
-	glutAddMenuEntry("Adjust Head", 2);
-	glutAddMenuEntry("Adjust Neck", 3);
-	glutAddMenuEntry("Adjust Left Shoulder", 4);
-	glutAddMenuEntry("Adjust Left Upper Arm", 5);
-	glutAddMenuEntry("Adjust Left Lower Arm", 6);
-	glutAddMenuEntry("Adjust Left Hand", 7);
-	glutAddMenuEntry("Adjust Right Shoulder", 8);
-	glutAddMenuEntry("Adjust Right Upper Arm", 9);
-	glutAddMenuEntry("Adjust Right Lower Arm", 10);
-	glutAddMenuEntry("Adjust Right Hand", 11);
-	glutAddMenuEntry("Adjust Torso", 12);
-	glutAddMenuEntry("Adjust Abdomen", 13);
-	glutAddMenuEntry("Adjust Hips", 14);
-	glutAddMenuEntry("Adjust Upper Left Leg", 15);
-	glutAddMenuEntry("Adjust Lower Left Leg", 16);
-	glutAddMenuEntry("Adjust Left Foot", 17);
-	glutAddMenuEntry("Adjust Upper Right Leg", 18);
-	glutAddMenuEntry("Adjust Lower Right leg", 19);
-	glutAddMenuEntry("Adjust Right Foot", 20);
-	menuID = glutCreateMenu(menu);
-	glutAddSubMenu("Rotations", subMenuID);
-
-
-	glutAddMenuEntry("Close Program", 0);
-	glutAttachMenu(GLUT_MIDDLE_BUTTON);
-
-}
 
 int
 main(int argc, char **argv)
@@ -64,7 +14,6 @@ main(int argc, char **argv)
 	//Title of window.
 
 	window = glutCreateWindow("CS4204: Assignment Three");
-	createMenu();
 	//CALLBACKS-------------------------------------------
 
 	//GLUT initialization method.
