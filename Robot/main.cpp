@@ -1,7 +1,9 @@
 #include "main.h"
 #include <windows.h>
 
+
 GLuint firstTexture;
+Controls cameraControls;
 
 int
 main(int argc, char **argv)
@@ -47,20 +49,57 @@ main(int argc, char **argv)
 	return 1;
 }
 
+
+void 
+normalKeyPressed(unsigned char key, int x, int y)
+{
+	cameraControls.normalKeyPressed(key, x, y);
+}
+
+void 
+normalKeyReleased(unsigned char key, int x, int y)
+{
+	cameraControls.normalKeyReleased(key, x, y);
+}
+
+void 
+specialKeyPressed(int key, int x, int y)
+{
+	cameraControls.specialKeyPressed(key, x, y);
+}
+
+void 
+specialKeyReleased(int key, int x, int y)
+{
+	cameraControls.specialKeyReleased(key, x, y);
+}
+
+void 
+mouseButtonAction(int button, int state, int x, int y)
+{
+	cameraControls.mouseButtonAction(button, state, x, y);
+}
+
+void 
+mouseMovementAction(int x, int y)
+{
+	cameraControls.mouseMovementAction(x, y);
+}
+
 void
 display(void)
 {
-	if (changePositionInWorld != 0)
+	if (cameraControls.getPositionInWorld() != 0)
 	{
-		changedPositionInWorld(changePositionInWorld);
+		cameraControls.changedPositionInWorld(cameraControls.getPositionInWorld());
 	}
-	if (strafeValue != 0)
+	if (cameraControls.getStrafe() != 0)
 	{
-		changedPositionByStrafe(strafeValue);
+		cameraControls.changedPositionByStrafe(cameraControls.getStrafe());
 	}
-	if (jump != 0)
+	if (cameraControls.getJump() != 0)
 	{
-		changeCameraHeight(jump);
+		cameraControls.changeCameraHeight(cameraControls.getJump());
 	}
 	//Clears color and depth buffers.
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -75,8 +114,8 @@ display(void)
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
 	//Set camera.
-	gluLookAt(cameraPositionX, cameraPositionY, cameraPositionZ,
-		cameraPositionX + cameraDirectionX, cameraPositionY + cameraDirectionY, cameraPositionZ + cameraDirectionZ,
+	gluLookAt(cameraControls.getCameraXPosition(), cameraControls.getCameraYPosition(), cameraControls.getCameraZPosition(),
+		cameraControls.getCameraXPosition() + cameraControls.getCameraXDirection(), cameraControls.getCameraYPosition() + cameraControls.getCameraYDirection(), cameraControls.getCameraZPosition() + cameraControls.getCameraZDirection(),
 		0.0f, 1.0f, 0.0f);
 
 	//Draw floor.
@@ -107,8 +146,8 @@ display(void)
 	{
 		return;
 	}
-
-	variableRotation += 0.5f;
+/*
+	variableRotation += 0.5f;*/
 	glutSwapBuffers();
 
 }
@@ -138,93 +177,6 @@ reshapeDisplay(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void
-constructRobot()
-{
-	//Push global matrix onto stack.
-	glPushMatrix();
-	{
-		//Position robot in world.
-		glTranslatef(0.0f, 7.5f, -50.0f);
-		//Scale robot if necessary. Initially populate the scale array.
-		setScale(1.0f, 1.0f, 1.0f, scale);
-		//Push robot position to stack.
-		glPushMatrix();
-		{
-			//Draw waist.
-
-			glPushMatrix();
-			//glRotatef(variableRotation, 0.0f, 1.0f, 0.0f);
-			constructWaist(scale);
-			glPopMatrix();
-		}
-		//Pop robot position.
-		glPopMatrix();
-
-	}
-	//Pop global matrix.
-	glPopMatrix();
-
-}
-
-void
-constructWaist(float scale[3])
-{
-	//Set scale for position.
-
-	setScale(2.5f, 0.5f, 1.0f, scale);
-	//Position waist.
-	glScalef(scale[0], scale[1], scale[2]);
-	//glScalef(2.5f, 0.5f, 1.0f);
-	//Push positioned waist to stack.
-	glPushMatrix();
-	{
-		float* waistScale = scale;
-		//Draw waist.
-		drawCube(0.0f, 0.0f, 0.0f);
-		//Push waist in scene matrix.
-		glPushMatrix();
-		{
-			constructLeftLeg(waistScale);
-		}
-		//Pop waist.
-		glPopMatrix();
-		//Push waist in scene matrix.
-		glPushMatrix();
-		{
-			constructRightLeg(scale);
-		}
-		//Pop waist.
-		glPopMatrix();
-		//Push waist in scene matrix.
-		glPushMatrix();
-		{
-			constructAbdomen(scale);
-		}
-		//Pop waist.
-		glPopMatrix();
-
-	}
-	//Pop waist position.
-	glPopMatrix();
-}
-
-void
-constructLeftLeg(float waistScale[3])
-{
-	glScalef(0.4f, 2.0f, 1.0f);
-	//Position left leg.
-	glTranslatef(-1.5f, -2.0f - jointGap, 0.0f);
-	glScalef(1.0f, 1.5f, 1.0f);
-	//Push left leg position.
-	glPushMatrix();
-	{
-		constructUpperLeg(waistScale);
-	}
-	//Pop left leg position.
-	glPopMatrix();
-
-}
 void
 setLighting(GLfloat* specular, GLfloat* diffuse, GLfloat* emission, bool specularBool, bool diffuseBool, bool emissionBool, GLfloat* shine)
 {
@@ -258,278 +210,8 @@ setLighting(GLfloat* specular, GLfloat* diffuse, GLfloat* emission, bool specula
 	}
 
 }
-void
-constructUpperLeg(float waistScale[3])
-{
-	//Scale for leg
-	//setScale(1.0f, 1.5f, 1.0f, scale);
-	//Push leg scale.
-	glPushMatrix();
-	{
-		//Draw upper leg.
-		drawCube(0.5f, 0.0f, 0.0f);
-		glTranslatef(0.0f, -2.0f - jointGap, 0.0f);
-		glPushMatrix();
-		{
-			constructLowerLeg(waistScale);
-		}
-		glPopMatrix();
-	}
-	//Pop scale.
-	glPopMatrix();
-}
-
-void
-constructLowerLeg(float waistScale[3])
-{
-	glPushMatrix();
-	{
-		drawCube(1.0f, 1.0f, 1.0f);
-		glScalef(1.0f, 0.8f, 1.0f);
-
-		glTranslatef(0.0f, -1.75f - jointGap, 1.0f);
-
-		glScalef(1.0f, 0.5f, 2.0f);
-		constructFoot(waistScale);
-	}
-	glPopMatrix();
-}
-
-void
-constructFoot(float lowerLegScale[3])
-{
-	glPushMatrix();
-	{
-
-		drawCube(1.0f, 0.0f, 0.0f);
-	}
-	glPopMatrix();
-}
-
-void
-constructRightLeg(float waistScale[3])
-{
-	glScalef(0.4f, 2.0f, 1.0f);
-
-	//Position left leg.
-	glTranslatef(1.5f, -2.0f - jointGap, 0.0f);
-	glScalef(1.0f, 1.5f, 1.0f);
-	//Push left leg position.
-	glPushMatrix();
-	{
-		constructUpperLeg(waistScale);
-	}
-	//Pop left leg position.
-	glPopMatrix();
-}
-
-void
-constructAbdomen(float waistScale[3])
-{
-	glScalef(1.0f, 2.0f, 1.0f);
-	glTranslatef(0.0f, 1.5f + jointGap, 0.0f);
-
-	//Push abdomen position.
-	glPushMatrix();
-
-	{
-		//Draw abdomen.
-		drawCube(0.0f, 0.5f, 0.0f);
-
-		constructTorso(waistScale);
 
 
-	}
-	//Pop abdomen position.
-	glPopMatrix();
-}
-
-void
-constructTorso(float abdomenScale[3])
-{
-
-	glTranslatef(0.0f, 3.0f + jointGap, 0.0f);
-
-	glScalef(1.0f, 2.0f, 1.0f);
-	glPushMatrix();
-	{
-		//Draw torso.
-		drawCube(0.0f, 1.0f, 0.0f);
-		glPushMatrix();
-		{
-			constructLeftShoulder(abdomenScale);
-		}
-		glPopMatrix();
-		glPushMatrix();
-		{
-			constructNeck(abdomenScale);
-		}
-		glPopMatrix();
-		glPushMatrix();
-		{
-			constructRightShoulder(abdomenScale);
-		}
-		glPopMatrix();
-	}
-	glPopMatrix();
-}
-
-void
-constructNeck(float* torsoScale)
-{
-	glScalef(0.4f, 0.5f, 1.0f);
-	glTranslatef(0.0f, 3.0f + jointGap, 0.0f);
-	//Push neck position
-	glPushMatrix();
-	{
-		//Draw neck.
-		drawCube(0.0f, 0.0f, 0.5f);
-		//Push neck for head reference.
-		glPushMatrix();
-		{
-			constructHead(torsoScale);
-		}
-		glPopMatrix();
-	}
-	glPopMatrix();
-}
-
-void
-constructHead(float* neckScale)
-{
-	glTranslatef(0.0f, 3.0f + jointGap, 0.0f);
-	glScalef(2.0f, 2.0f, 2.0f);
-	//Push head position.
-	glPushMatrix();
-	{
-		//Draw head.
-		drawCube(0.0f, 0.0f, 1.0f);
-	}
-	glPopMatrix();
-}
-
-void
-constructLeftShoulder(float* torsoScale)
-{
-	//Scale back to make it move 1:1:1 float
-	glScalef(0.4f, 0.5f, 1.0f);
-	glTranslatef(-2.5f - jointGap, 2.5f + jointGap, 0.0f);
-	//Scale to 1.5:0.5:1 float
-	glScalef(1.5f, 0.5f, 1.0f);
-	//Push shoulder position.
-	glPushMatrix();
-	{
-		//Draw shoulder.
-		drawCube(0.5f, 0.5f, 0.0f);
-		//Move to arm position.
-		glScalef((2.0f / 3.0f), 2.0f, 1.0f);
-		glTranslatef(-1.0f, -2.0f - jointGap, 0.0f);
-		glPushMatrix();
-		{
-			//Set up upper arm.
-			//Scale back from shoulder to make it 1:1:1
-
-			constructUpperArm(torsoScale);
-		}
-		glPopMatrix();
-
-	}
-	glPopMatrix();
-
-}
-
-void
-constructUpperArm(float* shoulderScale)
-{
-
-	glScalef(0.5f, 1.5f, 1.0f);
-	//Push upper arm position
-	glPushMatrix();
-	{
-		//Draw upper arm
-		drawCube(0.5f, 1.0f, 0.0f);
-
-		constructLowerArm(shoulderScale);
-	}
-	glPopMatrix();
-
-}
-
-void
-constructLowerArm(float* upperArmScale)
-{
-	glScalef(1.0f, (2.0f / 3.0f), 1.0f);
-	glTranslatef(0.0f, -3.0f - jointGap, 0.0f);
-	glScalef(1.0f, 1.5f, 1.0f);
-	//Push lower arm position.
-	glPushMatrix();
-	{
-		//Draw lower arm.
-		drawCube(0.5f, 0.5f, 0.5f);
-
-		constructHand(upperArmScale);
-	}
-	glPopMatrix();
-}
-
-void
-constructHand(float* lowerArmScale)
-{
-	glScalef(1.0f, (2.0f / 3.0f), 1.0f);
-	glTranslatef(0.0f, -2.5f - jointGap, 0.0f);
-	glScalef(0.75f, 1.0f, 1.0f);
-	//Push hand position.
-	glPushMatrix();
-	{
-		//Draw hand.
-		drawCube(0.5f, 0.5f, 1.0f);
-	}
-	glPopMatrix();
-}
-
-void
-constructRightShoulder(float* torsoScale)
-{
-	glScalef(0.4f, 0.5f, 1.0f);
-	glTranslatef(2.5f + jointGap, 2.5f + jointGap, 0.0f);
-	glScalef(1.5f, 0.5f, 1.0f);
-	//Push shoulder position.
-	glPushMatrix();
-	{
-		//Draw shoulder.
-		drawCube(0.5f, 1.0f, 1.0f);
-
-		glScalef((2.0f / 3.0f), 2.0f, 1.0f);
-		glTranslatef(1.0f, -2.0f - jointGap, 0.0f);
-		glPushMatrix();
-		{
-			//Set up upper arm.
-			//Scale back from shoulder to make it 1:1:1
-
-			constructUpperArm(torsoScale);
-		}
-		glPopMatrix();
-	}
-	glPopMatrix();
-}
-
-
-void
-resetScale(float scale[3])
-{
-	scale[0] = 1 / scale[0];
-	scale[1] = 1 / scale[1];
-	scale[2] = 1 / scale[2];
-	glScalef(scale[0], scale[1], scale[2]);
-}
-
-void
-setScale(float scaleX, float scaleY, float scaleZ, float scale[3])
-{
-	scale[0] = scaleX;
-	scale[1] = scaleY;
-	scale[2] = scaleZ;
-}
 
 void
 drawCube(float red, float green, float blue)
@@ -696,223 +378,3 @@ idleDisplay(void)
 	//display();
 }
 
-void
-normalKeyPressed(unsigned char key, int x, int y)
-{
-	//Escape key.
-	if (key == 27)
-	{
-		//Quits application.
-		exit(0);
-	}
-	//W key.
-	if (key == 119)
-	{
-		//Move into world.
-		changePositionInWorld = 1.0f;
-		pedalUp = true;
-	}
-	//S key.
-	if (key == 115)
-	{
-		//Move out of world.
-		changePositionInWorld = -1.0f;
-		pedalBack = true;
-	}
-	//Q key.
-	if (key == 113)
-	{
-		//Turn left in world.
-		cameraXAngle -= 0.01f;
-		angleOrientation(cameraXAngle);
-	}
-	//E key.
-	if (key == 101)
-	{
-		//Turn right in world.
-		cameraXAngle += 0.01f;
-		angleOrientation(cameraXAngle);
-	}
-	//A key.
-	if (key == 97)
-	{
-		//Strafe left in world.
-		strafeValue = -1.0f;
-		strafeLeft = true;
-	}
-	//D key.
-	if (key == 100)
-	{
-		//Strafe right in world.
-		strafeValue = 1.0f;
-		strafeRight = true;
-		
-	}
-	if (key == 32)
-	{
-		//Rise up.
-		jump = 0.1f;
-		ascend = true;
-	}
-	if (key == 120)
-	{
-		//Float down.
-		jump = -0.1f;
-		descend = true;
-	}
-}
-
-void
-normalKeyReleased(unsigned char key, int x, int y)
-{
-	if (key == 119)
-	{
-		changePositionInWorld = 0.0f;
-	}
-	if (key == 115)
-	{
-		changePositionInWorld = 0.0f;
-	}
-	if (key == 97)
-	{
-		strafeValue = 0.0f;
-	}
-	if (key == 100)
-	{
-		strafeValue = 0.0f;
-	}
-	if (key == 32)
-	{
-		jump = 0.0f;
-	}
-	if (key == 120)
-	{
-		jump = 0.0f;
-	}
-}
-
-void
-specialKeyPressed(int key, int x, int y)
-{
-	//TODO: Implement
-}
-
-void
-specialKeyReleased(int key, int x, int y)
-{
-	//TODO: Implement
-}
-
-void
-mouseButtonAction(int button, int state, int x, int y)
-{
-	//If left button pressed, rotate camera on x/y plane.
-	if (button == GLUT_LEFT_BUTTON)
-	{
-		//Set initial values to be compared with in mouseMovementAction method.
-		if (state == GLUT_DOWN)
-		{
-			initialX = x;
-			initialY = y;
-			leftMousePressed = true;
-		}
-		else
-		{
-			//Reset vales, and change camera angle.
-			initialX = 0;
-			initialY = 0;
-			cameraXAngle += changeInXAngle;
-			cameraYAngle += changeInYAngle;
-			leftMousePressed = false;
-		}
-	}
-
-	//Pans camera based on if button down.
-	if (button == GLUT_RIGHT_BUTTON)
-	{
-		if (state == GLUT_DOWN)
-		{
-			initialX = x;
-			rightMousePressed = true;
-		}
-		else
-		{
-			initialX = 0;
-			rightMousePressed = false;
-		}
-	}
-}
-
-void
-mouseMovementAction(int x, int y)
-{
-	int initialDifference = x - initialX;
-
-	//Test if left mouse button pressed or not.
-	if (leftMousePressed)
-	{
-		//Updates change in camera angle.
-		changeInXAngle = (x - initialX) * 0.001f;
-		changeInYAngle = (y - initialY) * 0.001f;
-		//Updates camera direction.
-		cameraDirectionX = sin(cameraXAngle + changeInXAngle);
-		cameraDirectionY = -sin(cameraYAngle + changeInYAngle);
-		cameraDirectionZ = -cos(cameraXAngle + changeInXAngle);
-
-	}
-
-	//Test if right button pressed for strafing.
-	if (rightMousePressed)
-	{
-
-		//changedPositionByStrafe(0.001f * x);
-		if (xValueChange > initialDifference)
-		{
-			changedPositionByStrafe(1.0f);
-
-		}
-		else
-		{
-			changedPositionByStrafe(-1.0f);
-		}
-		xValueChange = initialDifference;
-	}
-}
-
-void
-changedPositionInWorld(float changeInPosition)
-{
-	//Changes position in world based on user input.
-	cameraPositionX += changeInPosition * cameraDirectionX * 0.2f;
-	cameraPositionZ += changeInPosition * cameraDirectionZ * 0.2f;
-	
-}
-
-void
-changeCameraHeight(float verticalMovement)
-{
-	if ((verticalMovement < 0 && cameraPositionY > 1.0f) || (verticalMovement > 0) )
-	{
-		cameraPositionY += verticalMovement;
-	}
-	
-}
-
-void
-changedPositionByStrafe(float changeInPosition)
-{
-	//Strafes based on user input.
-	cameraPositionX += changeInPosition * 0.3f * cos(cameraXAngle);
-	cameraPositionZ += changeInPosition * 0.3f * sin(cameraXAngle);
-}
-
-void
-angleOrientation(float theta)
-{
-	cameraDirectionX = sin(theta);
-	cameraDirectionZ = -cos(theta);
-	glLoadIdentity();
-	gluLookAt(cameraPositionX, cameraPositionY, cameraPositionZ,
-		cameraPositionX + cameraDirectionX, cameraPositionY + cameraDirectionY,
-		cameraPositionZ + cameraDirectionZ, 0.0f, 1.0f, 0.0f);
-}
