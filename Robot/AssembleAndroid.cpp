@@ -1,6 +1,9 @@
 #include "AssembleAndroid.h"
 
-void
+//Stores scale to be sent down pushMatrix pipeline when drawn.
+float scale[] = { 1.0f, 1.0f, 1.0f };
+
+void AssembleAndroid::
 constructRobot()
 {
 	//Push global matrix onto stack.
@@ -29,7 +32,7 @@ constructRobot()
 
 }
 
-void
+void AssembleAndroid::
 constructWaist(float scale[3])
 {
 	//Set scale for position.
@@ -71,7 +74,7 @@ constructWaist(float scale[3])
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructLeftLeg(float waistScale[3])
 {
 	glScalef(0.4f, 2.0f, 1.0f);
@@ -88,7 +91,7 @@ constructLeftLeg(float waistScale[3])
 
 }
 
-void
+void AssembleAndroid::
 constructUpperLeg(float waistScale[3])
 {
 	//Scale for leg
@@ -108,8 +111,8 @@ constructUpperLeg(float waistScale[3])
 	//Pop scale.
 	glPopMatrix();
 }
-
-void
+ 
+void AssembleAndroid::
 constructLowerLeg(float waistScale[3])
 {
 	glPushMatrix();
@@ -125,7 +128,7 @@ constructLowerLeg(float waistScale[3])
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructFoot(float lowerLegScale[3])
 {
 	glPushMatrix();
@@ -136,7 +139,7 @@ constructFoot(float lowerLegScale[3])
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructRightLeg(float waistScale[3])
 {
 	glScalef(0.4f, 2.0f, 1.0f);
@@ -153,7 +156,7 @@ constructRightLeg(float waistScale[3])
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructAbdomen(float waistScale[3])
 {
 	glScalef(1.0f, 2.0f, 1.0f);
@@ -174,7 +177,7 @@ constructAbdomen(float waistScale[3])
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructTorso(float abdomenScale[3])
 {
 
@@ -204,7 +207,7 @@ constructTorso(float abdomenScale[3])
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructNeck(float* torsoScale)
 {
 	glScalef(0.4f, 0.5f, 1.0f);
@@ -224,7 +227,7 @@ constructNeck(float* torsoScale)
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructHead(float* neckScale)
 {
 	glTranslatef(0.0f, 3.0f + jointGap, 0.0f);
@@ -238,7 +241,7 @@ constructHead(float* neckScale)
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructLeftShoulder(float* torsoScale)
 {
 	//Scale back to make it move 1:1:1 float
@@ -268,7 +271,7 @@ constructLeftShoulder(float* torsoScale)
 
 }
 
-void
+void AssembleAndroid::
 constructUpperArm(float* shoulderScale)
 {
 
@@ -285,7 +288,7 @@ constructUpperArm(float* shoulderScale)
 
 }
 
-void
+void AssembleAndroid::
 constructLowerArm(float* upperArmScale)
 {
 	glScalef(1.0f, (2.0f / 3.0f), 1.0f);
@@ -302,7 +305,7 @@ constructLowerArm(float* upperArmScale)
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructHand(float* lowerArmScale)
 {
 	glScalef(1.0f, (2.0f / 3.0f), 1.0f);
@@ -317,7 +320,7 @@ constructHand(float* lowerArmScale)
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 constructRightShoulder(float* torsoScale)
 {
 	glScalef(0.4f, 0.5f, 1.0f);
@@ -343,7 +346,7 @@ constructRightShoulder(float* torsoScale)
 	glPopMatrix();
 }
 
-void
+void AssembleAndroid::
 resetScale(float scale[3])
 {
 	scale[0] = 1 / scale[0];
@@ -352,7 +355,7 @@ resetScale(float scale[3])
 	glScalef(scale[0], scale[1], scale[2]);
 }
 
-void
+void AssembleAndroid::
 setScale(float scaleX, float scaleY, float scaleZ, float scale[3])
 {
 	scale[0] = scaleX;
