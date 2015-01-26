@@ -1,7 +1,12 @@
 #include "AssembleAndroid.h"
 
-//Stores scale to be sent down pushMatrix pipeline when drawn.
-float scale[] = { 1.0f, 1.0f, 1.0f };
+AssembleAndroid::
+AssembleAndroid()
+{
+	scale[0] = 1.0f;
+	scale[1] = 1.0f;
+	scale[2] = 1.0f;
+}
 
 void AssembleAndroid::
 constructRobot()
@@ -167,7 +172,7 @@ constructAbdomen(float waistScale[3])
 
 	{
 		//Draw abdomen.
-		drawCube(0.0f, 0.5f, 0.0f);
+		AssembleAndroid::drawCube(0.0f, 0.5f, 0.0f);
 
 		constructTorso(waistScale);
 

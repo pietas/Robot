@@ -4,6 +4,7 @@
 
 GLuint firstTexture;
 Controls cameraControls;
+AssembleAndroid* assembleAndroid = new AssembleAndroid();
 
 int
 main(int argc, char **argv)
@@ -140,7 +141,7 @@ display(void)
 
 	//DRAW ROBOT------------------------------------------
 
-	constructRobot();
+	assembleAndroid->constructRobot();
 
 	if (value == 2)
 	{

@@ -2,6 +2,7 @@
 #include <gl\glut.h>
 #include "Controls.h"
 #include "Materials.h"
+#include "AssembleAndroid.h"
 
 #include <iostream>
 #include <fstream>
