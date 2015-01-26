@@ -97,6 +97,8 @@
     <ClCompile Include="AssembleAndroid.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="Texturing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

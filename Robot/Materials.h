@@ -1,7 +1,29 @@
+#ifndef MATERIALS_HEADER
+#define MATERIALS_HEADER
 #include <gl\glut.h>
-//LIGHTING VARIABLES--------------------------------------
-GLfloat diffuseMaterial[] = { 1.0f, 1.0f, 1.0f };
-GLfloat specularMaterial[] = { 1.0f, 1.0f, 1.0f };
-GLfloat emissionMaterial[] = { 1.0f, 1.0f, 1.0f };
-GLfloat noMaterial[] = { 0.0f, 0.0f, 0.0f };
-GLfloat shineFactor[] = { 100 };
+
+class Materials
+{
+private:
+	//LIGHTING VARIABLES--------------------------------------
+	GLfloat diffuseMaterial[3];
+	GLfloat specularMaterial[3];
+	GLfloat emissionMaterial[3];
+	GLfloat noMaterial[3];
+	GLfloat shineFactor[1];
+
+public:
+	Materials();
+
+	GLfloat* getDiffuseMaterial();
+	void setDiffuseMaterial(GLfloat*);
+	GLfloat* getSpecularMaterial();
+	void setSpecularMaterial(GLfloat*);
+	GLfloat* getEmissionMaterial();
+	void setEmissionMaterial(GLfloat*);
+	GLfloat* getNoMaterial();
+	void setNoMaterial(GLfloat*);
+	GLfloat* getShineFactor();
+	void setShineFactor(GLfloat*);
+};
+#endif

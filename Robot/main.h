@@ -52,5 +52,3 @@ void reshapeDisplay(int width, int height);
 
 //Idle method declaration.
 void idleDisplay(void);
-
-void setLighting(GLfloat* specular, GLfloat* diffuse, GLfloat* emission, bool specularBool, bool diffuseBool, bool emissionBool, GLfloat* shine);
