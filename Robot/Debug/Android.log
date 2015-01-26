@@ -1,4 +1,4 @@
-﻿Build started 1/26/2015 5:47:51 PM.
+﻿Build started 1/26/2015 6:05:59 PM.
      1>Project "C:\Users\Willy\git\Robot\Robot\Android.vcxproj" on node 2 (Rebuild target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Android.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
@@ -20,4 +20,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.78
+Time Elapsed 00:00:02.51
