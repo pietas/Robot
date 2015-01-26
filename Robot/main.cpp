@@ -119,8 +119,9 @@ display(void)
 		0.0f, 1.0f, 0.0f);
 
 	//Draw floor.
-	glBindTexture(GL_TEXTURE_2D, firstTexture);
+	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin(GL_QUADS);
+	
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(-100.0f, 0.0f, -100.0f);
