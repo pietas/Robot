@@ -1,8 +1,14 @@
+#ifndef ASSEMBLEANDROID_HEADER
+#define ASSEMBLEANDROID_HEADER
 #include <gl\glut.h>
+#include "Materials.h"
+#include "Texturing.h"
+#include <stdio.h>
 
 class AssembleAndroid
 {
 private:
+	Texturing* textures;
 	//Gap distance between body parts.
 	float jointGap = 0.1f;
 
@@ -125,8 +131,7 @@ public:
 
 	//Creates upper leg for either right or left depending on prior translation.
 	void constructUpperLeg(float*);
+
+	void setLighting(GLfloat* specular, GLfloat* diffuse, GLfloat* emission, bool specularBool, bool diffuseBool, bool emissionBool, GLfloat* shine);
 };
-
-
-
-
+#endif
