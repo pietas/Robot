@@ -375,7 +375,11 @@ setScale(float scaleX, float scaleY, float scaleZ, float scale[3])
 void AssembleAndroid::
 setLighting(GLfloat* specular, GLfloat* diffuse, GLfloat* emission, bool specularBool, bool diffuseBool, bool emissionBool, GLfloat* shine)
 {
-	GLfloat* tempNoMaterial = materials->getNoMaterial();
+	GLfloat tempNoMaterial[3];
+	for (int i = 0; i < 3; i++)
+	{
+		tempNoMaterial[i] = *(materials->getNoMaterial() + i);
+	}
 	//If specular requested or not, set material according.
 	if (specularBool)
 	{
@@ -415,14 +419,24 @@ drawCube(float red, float green, float blue)
 {
 	GLfloat tempArray[3] = { red, green, blue };
 	materials->setDiffuseMaterial(tempArray);
-	printf("Current diffuse color: %f, %f, %f\n", red, green, blue);
+	materials->setEmissionMaterial(tempArray);
+	materials->setSpecularMaterial(tempArray);
+	//printf("Current diffuse color: %f, %f, %f\n", red, green, blue);
 	glBindTexture(GL_TEXTURE_2D, textures->getTexture());
 	glBegin(GL_QUADS);
 	{
-		GLfloat* tempSpecular = materials->getSpecularMaterial();
-		GLfloat* tempDiffuse = materials->getDiffuseMaterial();
-		GLfloat* tempEmission = materials->getEmissionMaterial();
-		GLfloat* tempShineFactor = materials->getShineFactor();
+		GLfloat tempSpecular[3];
+		GLfloat tempDiffuse[3];
+		GLfloat tempEmission[3];
+		GLfloat tempShineFactor[1];
+
+		for (int i = 0; i < 3; i++)
+		{
+			tempSpecular[i] = *(materials->getSpecularMaterial() + i);
+			tempDiffuse[i] = *(materials->getDiffuseMaterial() + i);
+			tempEmission[i] = *(materials->getEmissionMaterial() + i);
+		}
+		tempShineFactor[0] = *(materials->getShineFactor());
 
 		setLighting(tempSpecular, tempDiffuse, tempEmission, true, true, false, tempShineFactor);
 		materials->setSpecularMaterial(tempSpecular);

@@ -3,6 +3,7 @@
 #define CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
+#include <stdio.h>
 
 Controls::Controls()
 {
@@ -15,22 +16,17 @@ normalKeyPressed(unsigned char key, int x, int y)
 	//Escape key.
 	if (key == 27)
 	{
-		_CrtDumpMemoryLeaks();
 		//Quits application.
 		exit(0);
 	}
 	//W key.
 	if (key == 119)
 	{
-		//Move into world.
-		changePositionInWorld = 1.0f;
 		pedalUp = true;
 	}
 	//S key.
 	if (key == 115)
 	{
-		//Move out of world.
-		changePositionInWorld = -1.0f;
 		pedalBack = true;
 	}
 	//Q key.
@@ -50,28 +46,20 @@ normalKeyPressed(unsigned char key, int x, int y)
 	//A key.
 	if (key == 97)
 	{
-		//Strafe left in world.
-		strafeValue = -1.0f;
 		strafeLeft = true;
 	}
 	//D key.
 	if (key == 100)
 	{
-		//Strafe right in world.
-		strafeValue = 1.0f;
 		strafeRight = true;
 
 	}
 	if (key == 32)
 	{
-		//Rise up.
-		jump = 0.1f;
 		ascend = true;
 	}
 	if (key == 120)
 	{
-		//Float down.
-		jump = -0.1f;
 		descend = true;
 	}
 }
@@ -81,27 +69,27 @@ normalKeyReleased(unsigned char key, int x, int y)
 {
 	if (key == 119)
 	{
-		changePositionInWorld = 0.0f;
+		pedalUp = false;
 	}
 	if (key == 115)
 	{
-		changePositionInWorld = 0.0f;
+		pedalBack = false;
 	}
 	if (key == 97)
 	{
-		strafeValue = 0.0f;
+		strafeLeft = false;
 	}
 	if (key == 100)
 	{
-		strafeValue = 0.0f;
+		strafeRight = false;
 	}
 	if (key == 32)
 	{
-		jump = 0.0f;
+		ascend = false;
 	}
 	if (key == 120)
 	{
-		jump = 0.0f;
+		descend = false;
 	}
 }
 
@@ -129,32 +117,25 @@ mouseButtonAction(int button, int state, int x, int y)
 			initialX = x;
 			initialY = y;
 			leftMousePressed = true;
+			cameraXAngle += changeInXAngle;
+			cameraYAngle += changeInYAngle;
 		}
 		else
 		{
 			//Reset vales, and change camera angle.
 			initialX = 0;
 			initialY = 0;
-			cameraXAngle += changeInXAngle;
-			cameraYAngle += changeInYAngle;
+
+
 			leftMousePressed = false;
 		}
 	}
 
-	//Pans camera based on if button down.
-	if (button == GLUT_RIGHT_BUTTON)
-	{
-		if (state == GLUT_DOWN)
-		{
-			initialX = x;
-			rightMousePressed = true;
-		}
-		else
-		{
-			initialX = 0;
-			rightMousePressed = false;
-		}
-	}
+	////Pans camera based on if button down.
+	//if (button == GLUT_RIGHT_BUTTON)
+	//{
+
+	//}
 }
 
 void Controls::
@@ -175,22 +156,11 @@ mouseMovementAction(int x, int y)
 
 	}
 
-	//Test if right button pressed for strafing.
-	if (rightMousePressed)
-	{
+	////Test if right button pressed for strafing.
+	//if (rightMousePressed)
+	//{
 
-		//changedPositionByStrafe(0.001f * x);
-		if (xValueChange > initialDifference)
-		{
-			changedPositionByStrafe(1.0f);
-
-		}
-		else
-		{
-			changedPositionByStrafe(-1.0f);
-		}
-		xValueChange = initialDifference;
-	}
+	//}
 }
 
 void Controls::
@@ -215,9 +185,10 @@ changeCameraHeight(float verticalMovement)
 void Controls::
 changedPositionByStrafe(float changeInPosition)
 {
+
 	//Strafes based on user input.
-	cameraPositionX += changeInPosition * 0.3f * cos(cameraXAngle);
-	cameraPositionZ += changeInPosition * 0.3f * sin(cameraXAngle);
+	cameraPositionX += changeInPosition * 1.0f * cos(cameraXAngle);
+	cameraPositionZ += changeInPosition * 1.0f * sin(cameraXAngle);
 }
 
 void Controls::
@@ -564,4 +535,22 @@ void Controls::
 setCameraZPosition(float newValue)
 {
 	cameraPositionZ = newValue;
+}
+
+GLfloat Controls::
+getFinalPedalValue()
+{
+	return (pedalUp - pedalBack) * pedalModifier;
+}
+
+GLfloat Controls::
+getFinalStrafeValue()
+{
+	return (strafeRight - strafeLeft) * strafeModifier;
+}
+
+GLfloat Controls::
+getFinalHeightValue()
+{
+	return (ascend - descend) * heightModifier;
 }

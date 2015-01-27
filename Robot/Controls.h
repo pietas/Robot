@@ -45,6 +45,10 @@ private:
 	//Y position booleans for ascend and descend.
 	GLboolean ascend = false;
 	GLboolean descend = false;
+	//Modifiers for pedaling, strafing, and height.
+	GLfloat pedalModifier = 1.0f;
+	GLfloat strafeModifier = 1.0f;
+	GLfloat heightModifier = 0.1f;
 
 	//KEYBOARD MOVEMENT VARIABLES-----------------------------
 	//Change in angle variable.
@@ -263,4 +267,8 @@ public:
 
 	//Sets camera's Z position.
 	void setCameraZPosition(float);
+
+	GLfloat getFinalPedalValue();
+	GLfloat getFinalStrafeValue();
+	GLfloat getFinalHeightValue();
 };

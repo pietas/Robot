@@ -8,7 +8,7 @@ Materials()
 		diffuseMaterial[i] = 1.0f;
 		specularMaterial[i] = 1.0f;
 		emissionMaterial[i] = 1.0f;
-		noMaterial[i] = 1.0f;
+		noMaterial[i] = 0.0f;
 
 	}
 	shineFactor[0] = 1.0f;

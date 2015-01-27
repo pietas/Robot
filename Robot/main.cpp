@@ -50,37 +50,37 @@ main(int argc, char **argv)
 }
 
 
-void 
+void
 normalKeyPressed(unsigned char key, int x, int y)
 {
 	cameraControls.normalKeyPressed(key, x, y);
 }
 
-void 
+void
 normalKeyReleased(unsigned char key, int x, int y)
 {
 	cameraControls.normalKeyReleased(key, x, y);
 }
 
-void 
+void
 specialKeyPressed(int key, int x, int y)
 {
 	cameraControls.specialKeyPressed(key, x, y);
 }
 
-void 
+void
 specialKeyReleased(int key, int x, int y)
 {
 	cameraControls.specialKeyReleased(key, x, y);
 }
 
-void 
+void
 mouseButtonAction(int button, int state, int x, int y)
 {
 	cameraControls.mouseButtonAction(button, state, x, y);
 }
 
-void 
+void
 mouseMovementAction(int x, int y)
 {
 	cameraControls.mouseMovementAction(x, y);
@@ -89,18 +89,12 @@ mouseMovementAction(int x, int y)
 void
 display(void)
 {
-	if (cameraControls.getPositionInWorld() != 0)
-	{
-		cameraControls.changedPositionInWorld(cameraControls.getPositionInWorld());
-	}
-	if (cameraControls.getStrafe() != 0)
-	{
-		cameraControls.changedPositionByStrafe(cameraControls.getStrafe());
-	}
-	if (cameraControls.getJump() != 0)
-	{
-		cameraControls.changeCameraHeight(cameraControls.getJump());
-	}
+	cameraControls.changedPositionInWorld(cameraControls.getFinalPedalValue());
+
+	cameraControls.changedPositionByStrafe(cameraControls.getFinalStrafeValue());
+	
+	cameraControls.changeCameraHeight(cameraControls.getFinalHeightValue());
+
 	//Clears color and depth buffers.
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -119,8 +113,9 @@ display(void)
 		0.0f, 1.0f, 0.0f);
 
 	//Draw floor.
-	glBindTexture(GL_TEXTURE_2D, firstTexture);
+	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin(GL_QUADS);
+
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(-100.0f, 0.0f, -100.0f);
@@ -146,8 +141,8 @@ display(void)
 	{
 		return;
 	}
-/*
-	variableRotation += 0.5f;*/
+	/*
+		variableRotation += 0.5f;*/
 	glutSwapBuffers();
 
 }
