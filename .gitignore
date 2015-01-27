@@ -28,5 +28,7 @@
 *.app
 
 Robot/Debug/*
+Android.sdf
+Android.v12.suo
 
 
