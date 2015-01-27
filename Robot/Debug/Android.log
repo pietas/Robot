@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 1/26/2015 9:04:40 PM.
      1>Project "C:\Users\pietas\git\Robot\Robot\Android.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -13,6 +14,18 @@
          Generating Code...
          Skipping... (no relevant changes detected)
          Materials.cpp
+=======
+﻿Build started 1/26/2015 8:57:53 PM.
+     1>Project "C:\Users\pietas\git\Robot\Robot\Android.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AssembleAndroid.cpp Controls.cpp main.cpp Materials.cpp Texturing.cpp
+         Texturing.cpp
+         Materials.cpp
+         main.cpp
+         Controls.cpp
+         AssembleAndroid.cpp
+         Generating Code...
+>>>>>>> f57ec9de08b134848559f281740e7861a439ebbf
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pietas\git\Robot\Robot\Debug\Android 1.0.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\pietas\git\Robot\Robot\Debug\Android 1.0.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pietas\git\Robot\Robot\Debug\Android 1.0.lib" /MACHINE:X86 Debug\AssembleAndroid.obj
          Debug\Controls.obj
@@ -24,4 +37,8 @@
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:01.96
+=======
+Time Elapsed 00:00:02.45
+>>>>>>> f57ec9de08b134848559f281740e7861a439ebbf
