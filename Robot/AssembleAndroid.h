@@ -1,14 +1,21 @@
+#ifndef ASSEMBLEANDROID_HEADER
+#define ASSEMBLEANDROID_HEADER
 #include <gl\glut.h>
+#include "Materials.h"
+#include "Texturing.h"
+#include <stdio.h>
 
 class AssembleAndroid
 {
 private:
+	Texturing* textures;
 	//Gap distance between body parts.
 	float jointGap = 0.1f;
 
 	float variableRotation = 0.0f;
 
-
+	//Stores scale to be sent down pushMatrix pipeline when drawn.
+	float scale[3];
 
 	//BODY ROTATION VARIABLES---------------------------------
 	//Head rotation angles.
@@ -87,6 +94,7 @@ private:
 	GLfloat RightFootZRotation = 0.0f;
 
 public:
+	AssembleAndroid();
 	//Draw cube method.
 	void drawCube(float red, float green, float blue);
 	void constructTorso(float*);
@@ -101,10 +109,10 @@ public:
 	void constructHand(float*);
 	void constructRobot();
 	//Construct waist.
-	void constructWaist(float scale[3]);
+	void constructWaist(float*);
 
 	//Sets scale of array that stores scale values
-	void setScale(float scaleX, float scaleY, float scaleZ, float scale[3]);
+	void setScale(float, float, float, float*);
 
 	//Resets scale to be 1:1:1. Will create 1x1x1 cubes.
 	void resetScale(float*);
@@ -123,8 +131,7 @@ public:
 
 	//Creates upper leg for either right or left depending on prior translation.
 	void constructUpperLeg(float*);
+
+	void setLighting(GLfloat* specular, GLfloat* diffuse, GLfloat* emission, bool specularBool, bool diffuseBool, bool emissionBool, GLfloat* shine);
 };
-
-
-
-
+#endif

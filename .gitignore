@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+<<<<<<< HEAD
+=======
+
+Robot/Debug/*
+Android.sdf
+Android.v12.suo
+
+
+>>>>>>> 6f3b84b55d94c48efa6862137069bff12764e851
